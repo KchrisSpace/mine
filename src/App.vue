@@ -1,14 +1,12 @@
 <!--  -->
 <template>
-    <div>
-     <router-view  ></router-view>
-    </div>
+  <div>
+    <router-view></router-view>
+  </div>
 </template>
 
-<script setup >
-import router from "./router/use-route";
+<script setup>
+import router from "./router/useroute";
 </script>
 
-<style  scoped>
-
-</style>
+<style scoped></style>

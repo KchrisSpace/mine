@@ -4,60 +4,64 @@
     <div class="login-box">
       <h2 class="login-title">Login</h2>
       <div class="input">
-        <input type="text" placeholder="请输入账号" />
-        <input type="password" placeholder="请输入密码" />
+        <input type="text" v-model="username" placeholder="请输入账号" />
+        <input type="password" v-model="password" placeholder="请输入密码" />
       </div>
       <div class="loginbutton">
-        <button @click="goToHome">Login</button>
+        <button @click="handleLogin">挑战</button>
       </div>
+      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
-import { ref } from "vue";
-
-const goToHome = () => {
-  router.push("/home");
-};
 
 const router = useRouter();
 const username = ref("");
 const password = ref("");
 const errorMessage = ref("");
-validCredentials = axios.get("http://localhost:3000/").data
-console.log(validCredentials)
-.then(res => {
-    console.log(res)
-})
-.catch(err => {
-    console.error(err); 
-})
+const validCredentials = ref([]);
 
+onMounted(async () => {
+  try {
+    const response = await axios.get("http://localhost:3000/users");
+    validCredentials.value = response.data; // 直接提取数据
+    // console.log("获取的用户数据:", validCredentials.value); // 打
+  } catch (err) {
+    console.error(err);
+  }
+});
+// console.log("获取的用户数据:", validCredentials.value); // 打印获取的用户数据
 /**
- * 处理登录逻辑的函数
- * 
- * 此函数通过验证用户提供的用户名和密码是否与预定义的合法凭据匹配来处理登录过程
- * 如果提供的凭据有效，将重定向用户到RouteA页面，否则显示错误消息提示用户名或密码错误
+ * 登录处理函数
+ * 此函数验证用户提供的用户名和密码是否与预定义的有效凭证匹配
+ * 如果凭证有效，将错误消息重置为空，并导航到RouteA路由
+ * 如果凭证无效，则显示错误消息提示用户名或密码错误
  */
 const handleLogin = () => {
-  // 使用some方法遍历validCredentials数组，检查是否存在匹配的用户名和密码组合
-  const isValid = validCredentials.some(
+  // 使用some方法遍历有效凭证数组，检查是否存在匹配的用户名和密码
+  const isValid = validCredentials.value.some(
     (cred) =>
       cred.username === username.value && cred.password === password.value
   );
 
-  // 根据验证结果执行相应的逻辑
+  // 根据凭证验证结果，执行相应的操作
   if (isValid) {
-    // 清空错误消息
+    // 清空错误消息并导航到RouteA
     errorMessage.value = "";
-    // 重定向到RouteA页面
-    router.push({ name: "RouteA" });
+    router.push({ name: "home" });
+    console.log("登录成功");
+
   } else {
-    // 设置错误消息为用户名或密码错误
-    errorMessage.value = "用户名或密码错误";
+    // 显示错误消息提示用户名或密码错误
+ alert("用户名或密码错误");
+    // 并清空输入框
+    username.value = "";
+
   }
 };
 </script>
