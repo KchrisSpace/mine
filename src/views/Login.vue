@@ -8,9 +8,9 @@
         <input type="password" v-model="password" placeholder="请输入密码" />
       </div>
       <div class="loginbutton">
-        <button @click="handleLogin">挑战</button>
+        <button @click="handleLogin">login</button>
       </div>
-      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+    
     </div>
   </div>
 </template>
