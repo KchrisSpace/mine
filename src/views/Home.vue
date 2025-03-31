@@ -1,7 +1,9 @@
 <template>
   <div class="home">
+
+    Welcome to the home 
    
-这是首页
+
       
   </div>
 </template>

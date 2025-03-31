@@ -10,7 +10,6 @@
       <div class="loginbutton">
         <button @click="handleLogin">login</button>
       </div>
-    
     </div>
   </div>
 </template>
@@ -20,28 +19,22 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 
-const router = useRouter();
 const username = ref("");
 const password = ref("");
 const errorMessage = ref("");
 const validCredentials = ref([]);
+const router = useRouter();
 
 onMounted(async () => {
   try {
     const response = await axios.get("http://localhost:3000/users");
     validCredentials.value = response.data; // 直接提取数据
-    // console.log("获取的用户数据:", validCredentials.value); // 打
+    console.log("获取的用户数据:", validCredentials.value); // 打
   } catch (err) {
     console.error(err);
   }
 });
-// console.log("获取的用户数据:", validCredentials.value); // 打印获取的用户数据
-/**
- * 登录处理函数
- * 此函数验证用户提供的用户名和密码是否与预定义的有效凭证匹配
- * 如果凭证有效，将错误消息重置为空，并导航到RouteA路由
- * 如果凭证无效，则显示错误消息提示用户名或密码错误
- */
+
 const handleLogin = () => {
   // 使用some方法遍历有效凭证数组，检查是否存在匹配的用户名和密码
   const isValid = validCredentials.value.some(
@@ -53,15 +46,15 @@ const handleLogin = () => {
   if (isValid) {
     // 清空错误消息并导航到RouteA
     errorMessage.value = "";
+    // router.push({ name: "RouteA" });
+    // 跳转到首页
     router.push({ name: "home" });
     console.log("登录成功");
-
   } else {
     // 显示错误消息提示用户名或密码错误
- alert("用户名或密码错误");
+    alert("用户名或密码错误");
     // 并清空输入框
     username.value = "";
-
   }
 };
 </script>
@@ -71,7 +64,9 @@ const handleLogin = () => {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* cursor: none; */
 }
+
 .login-container {
   margin: 0;
   padding: 0;
@@ -85,6 +80,7 @@ const handleLogin = () => {
   justify-content: center;
   align-items: center;
   position: relative;
+  overflow: hidden;
 }
 input {
   width: 100%;

@@ -9,11 +9,12 @@ const routes = [
     name: "login",
     component: Login,
   },
-    {
-        path: "/home",
-        name: "home",
-        component: Home,
-    }// 在这里添加更多路由
+  {
+    path: "/home",
+    name: "home",
+    component: Home,
+  }, // 在这里添加更多路由
+  
 ];
 
 const router = createRouter({
