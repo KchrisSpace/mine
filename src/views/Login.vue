@@ -12,12 +12,17 @@
       </div>
     </div>
   </div>
+  <div id="bubble-container">
+    <BubbleEffect />
+  </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
+import BubbleEffect from "../components/BubbleEffect.vue";
+
 
 const username = ref("");
 const password = ref("");
@@ -57,6 +62,7 @@ const handleLogin = () => {
     username.value = "";
   }
 };
+
 </script>
 
 <style scoped>
@@ -64,7 +70,8 @@ const handleLogin = () => {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* cursor: none; */
+  
+  cursor: none;
 }
 
 .login-container {
@@ -147,6 +154,10 @@ input:focus {
   border-radius: 10px;
   color: #292727;
   background-color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 .loginbutton button:hover {
   background-color: #ac9f9f;
